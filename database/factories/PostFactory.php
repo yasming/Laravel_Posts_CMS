@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PostFactory extends Factory
@@ -24,7 +24,7 @@ class PostFactory extends Factory
         "calendar"
     ];
 
-    protected $model = User::class;
+    protected $model = Post::class;
 
     
     public function definition()
