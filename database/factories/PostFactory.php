@@ -31,7 +31,7 @@ class PostFactory extends Factory
     {
         $randomNumber = $this->faker->numberBetween(1,2);   
         return [
-            'title'   => $this->faker->title,
+            'title'   => $this->faker->text,
             'author'  => $this->faker->name,
             'content' => $this->faker->text,
             'tags'    => $randomNumber == 1 ? self::FIRST_RANDOM_TAGS : self::SECOND_RANDOM_TAGS,

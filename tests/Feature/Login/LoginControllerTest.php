@@ -30,6 +30,12 @@ class LoginControllerTest extends TestCase
           ->assertJson(['error' => 'invalid credentials']);
     }
 
+    public function test_should_not_allow_access_route()
+    {
+        $this->post('/api/posts')->assertStatus(401);
+
+    }
+
     public function test_should_be_able_to_auth_an_user()
     {
         $user     = User::find(1);

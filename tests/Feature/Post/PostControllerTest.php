@@ -3,7 +3,8 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-
+use App\Http\Resources\PostCollection;
+use App\Models\Post;
 class PostControllerTest extends TestCase
 {
     private $token;
@@ -19,6 +20,11 @@ class PostControllerTest extends TestCase
     
     public function test_it_should_be_able_to_list_all_posts()
     {
-        $this->get('/api/posts', ['Authorization' => "Bearer ".$this->token])->assertStatus(200);
+        $allPosts = new PostCollection(Post::all());
+        $response = $this->get('/api/posts', ['Authorization' => "Bearer ".$this->token])->assertStatus(200);
+
+        $this->assertEquals($allPosts->response()->getData(true)['data'],$response['data']);
+        $this->assertEquals(count($response['data']), Post::all()->count());
+
     }
 }
