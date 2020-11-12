@@ -27,4 +27,16 @@ class PostControllerTest extends TestCase
         $this->assertEquals(count($response['data']), Post::all()->count());
 
     }
+
+    public function test_it_should_be_able_to_search_post_by_tag()
+    {
+        $postsWithOrganizationTag = Post::whereJsonContains('tags', 'organization')->get();
+        $postsForJson             = new PostCollection($postsWithOrganizationTag);
+        $response                 = $this->get('/api/posts?tag=organization', ['Authorization' => "Bearer ".$this->token])
+                                         ->assertStatus(200);
+
+        $this->assertEquals($postsForJson->response()->getData(true)['data'],$response['data']);
+        $this->assertEquals(count($response['data']), $postsWithOrganizationTag->count());
+
+    }
 }

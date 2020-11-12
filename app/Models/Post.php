@@ -19,4 +19,11 @@ class Post extends Model
     protected $casts = [
         'tags' => 'array'
     ];
+
+    public function scopeSearchByTag($query)
+    {
+        return  $query->when(request()->query('tag'), function($query){
+                    return $query->whereJsonContains('tags',request()->query('tag'));
+                })->get();
+    }
 }
