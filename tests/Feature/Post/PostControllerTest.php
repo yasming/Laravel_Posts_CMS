@@ -5,12 +5,16 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Http\Resources\PostCollection;
 use App\Models\Post;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 class PostControllerTest extends TestCase
 {
+    use DatabaseMigrations;
+
     private $token;
     public function setUp(): void
     {
         parent::setUp();
+        $this->seed();
         $response = $this->post('/api/login', [
             'email'    => 'email@example.com', 
             'password' => 'password'
@@ -25,7 +29,6 @@ class PostControllerTest extends TestCase
 
         $this->assertEquals($allPosts->response()->getData(true)['data'],$response['data']);
         $this->assertEquals(count($response['data']), Post::all()->count());
-
     }
 
     public function test_it_should_be_able_to_search_post_by_tag()
@@ -37,6 +40,16 @@ class PostControllerTest extends TestCase
 
         $this->assertEquals($postsForJson->response()->getData(true)['data'],$response['data']);
         $this->assertEquals(count($response['data']), $postsWithOrganizationTag->count());
+    }
+
+    public function test_it_should_be_able_to_delete_a_post()
+    {
+        $response = $this->withHeaders(['Authorization' => "Bearer ".$this->token])
+             ->json('DELETE', '/api/posts/1')
+             ->assertStatus(204);
+    
+        $this->assertEquals($response->getData(true),[]);
+        $this->assertEquals(Post::find(1), null);
 
     }
 }
