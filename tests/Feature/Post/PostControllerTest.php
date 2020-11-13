@@ -15,6 +15,7 @@ class PostControllerTest extends TestCase
     {
         parent::setUp();
         $this->seed();
+        $this->withExceptionHandling();
         $response = $this->post('/api/login', [
             'email'    => 'email@example.com', 
             'password' => 'password'
@@ -98,7 +99,65 @@ class PostControllerTest extends TestCase
                             'author'  => 'test',
                             'tags'    => ['authorization'],
                          ]);
+    }
 
+    public function test_it_should_be_able_to_validate_fields_to_update_post()
+    {
+        $this->withHeaders(['Authorization' => "Bearer ".$this->token])
+             ->json('PUT', '/api/posts/1')
+             ->assertStatus(422)
+             ->assertExactJson([
+                            'tags'    => ['The tags field is required.'],
+                            'content' => ['The content field is required.'],
+                            'title'   => ['The title field is required.'],
+                            'author'  => ['The author field is required.']
+                          ]);
+
+        $this->withHeaders(['Authorization' => "Bearer ".$this->token])
+             ->json('PUT', '/api/posts/1',[
+                                            'tags'    => 'test'
+                                        ])
+             ->assertStatus(422)
+             ->assertExactJson([
+                            'content' => ['The content field is required.'],
+                            'tags'    => ['The tags must be an array.'],
+                            'title'   => ['The title field is required.'],
+                            'author'  => ['The author field is required.']
+                         ]);
+
+        $this->withHeaders(['Authorization' => "Bearer ".$this->token])
+             ->json('PUT', '/api/posts/1',[
+                                            'content' => ['test'],
+                                            'title'   => ['test'],
+                                            'author'  => ['test'],
+                                            'tags'    => ['authorization']
+                                        ])
+             ->assertStatus(422)
+             ->assertExactJson([
+                            'content' => ['The content must be a string.'],
+                            'title'   => ['The title must be a string.'],
+                            'author'  => ['The author must be a string.']
+                         ]);
+
+    }
+
+    public function test_it_should_be_able_to_able_to_update_a_post()
+    {
+        $this->withHeaders(['Authorization' => "Bearer ".$this->token])
+             ->json('PUT', '/api/posts/1',[
+                                                'content' => 'test update',
+                                                'title'   => 'test update',
+                                                'author'  => 'test update',
+                                                'tags'    => ['json']
+                                        ])
+             ->assertStatus(200)
+             ->assertExactJson([
+                            'content' => 'test update',
+                            'title'   => 'test update',
+                            'author'  => 'test update',
+                            'tags'    => ['json'],
+                            'id'      => 1
+                         ]);
     }
 
     public function test_it_should_be_able_to_delete_a_post()
