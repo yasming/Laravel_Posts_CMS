@@ -14,6 +14,6 @@ class PostCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return $this->collection->map->only('title','author','content','tags')->toArray($request);
+        return parent::toArray($request);
     }
 }

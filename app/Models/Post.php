@@ -19,6 +19,7 @@ class Post extends Model
     protected $casts = [
         'tags' => 'array'
     ];
+    protected $hidden = ['created_at', 'updated_at'];
 
     public function scopeSearchByTag($query)
     {

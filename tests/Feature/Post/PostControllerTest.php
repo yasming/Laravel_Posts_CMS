@@ -42,14 +42,72 @@ class PostControllerTest extends TestCase
         $this->assertEquals(count($response['data']), $postsWithOrganizationTag->count());
     }
 
+    public function test_it_should_be_able_to_validate_fields_to_create_post()
+    {
+        $this->withHeaders(['Authorization' => "Bearer ".$this->token])
+             ->json('POST', '/api/posts')
+             ->assertStatus(422)
+             ->assertExactJson([
+                            'tags'    => ['The tags field is required.'],
+                            'content' => ['The content field is required.'],
+                            'title'   => ['The title field is required.'],
+                            'author'  => ['The author field is required.']
+                          ]);
+
+        $this->withHeaders(['Authorization' => "Bearer ".$this->token])
+             ->json('POST', '/api/posts',[
+                                            'tags'    => 'test'
+                                        ])
+             ->assertStatus(422)
+             ->assertExactJson([
+                            'content' => ['The content field is required.'],
+                            'tags'    => ['The tags must be an array.'],
+                            'title'   => ['The title field is required.'],
+                            'author'  => ['The author field is required.']
+                         ]);
+
+        $this->withHeaders(['Authorization' => "Bearer ".$this->token])
+             ->json('POST', '/api/posts',[
+                                            'content' => ['test'],
+                                            'title'   => ['test'],
+                                            'author'  => ['test'],
+                                            'tags'    => ['authorization']
+                                        ])
+             ->assertStatus(422)
+             ->assertExactJson([
+                            'content' => ['The content must be a string.'],
+                            'title'   => ['The title must be a string.'],
+                            'author'  => ['The author must be a string.']
+                         ]);
+
+    }
+
+    public function test_it_should_be_able_to_able_to_create_a_post()
+    {
+        $this->withHeaders(['Authorization' => "Bearer ".$this->token])
+             ->json('POST', '/api/posts',[
+                                                'content' => 'test',
+                                                'title'   => 'test',
+                                                'author'  => 'test',
+                                                'tags'    => ['authorization']
+                                        ])
+             ->assertStatus(201)
+             ->assertJson([
+                            'content' => 'test',
+                            'title'   => 'test',
+                            'author'  => 'test',
+                            'tags'    => ['authorization'],
+                         ]);
+
+    }
+
     public function test_it_should_be_able_to_delete_a_post()
     {
         $response = $this->withHeaders(['Authorization' => "Bearer ".$this->token])
-             ->json('DELETE', '/api/posts/1')
-             ->assertStatus(204);
+                         ->json('DELETE', '/api/posts/1')
+                         ->assertStatus(204);
     
         $this->assertEquals($response->getData(true),[]);
         $this->assertEquals(Post::find(1), null);
-
     }
 }
