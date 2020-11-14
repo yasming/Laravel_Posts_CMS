@@ -1,6 +1,6 @@
 # Posts-CMS
 
-This project simulate a cms posts systems, where the post have a content, title, author and tags, the user needs to authenticate to use the posts system .
+This project simulate a cms posts systems, where the post have a content, title, author and tags, the user needs to authenticate to use the posts system cms .
 
 ## Prerequisites
 
