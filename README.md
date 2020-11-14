@@ -9,6 +9,10 @@ PHP >= 7.3
 ```
 
 ```
+PHP Unit >=9.3.3
+```
+
+```
 Laravel >= 8.12
 ```
 
@@ -16,6 +20,10 @@ Laravel >= 8.12
 ### API Collection
 
 https://www.getpostman.com/collections/94a84cdf476c573e0566
+
+### API Swagger Documentation
+
+https://app.swaggerhub.com/apis-docs/yasminguimaraes/Posts_CMS/1.0.0
 
 ### Getting Started
 
@@ -41,7 +49,13 @@ php artisan jwt:generate
 php artisan migrate --seed
 ```
 
-- How to consume the project routes: 
+### How to run tests
+
+```
+php artisan test
+```
+
+### How to consume the project routes: 
 
 ```
 Auth
