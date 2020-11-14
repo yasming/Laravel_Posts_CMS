@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://posts-cms.herokuapp.com/'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -119,7 +119,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key' => env('APP_KEY', 'base64:Alx7WJZkEsVLJuHXplQZsnpfMrO1UOImRsVT7Sq+tq4='),
 
     'cipher' => 'AES-256-CBC',
 
