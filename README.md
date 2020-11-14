@@ -25,6 +25,10 @@ https://www.getpostman.com/collections/94a84cdf476c573e0566
 
 https://app.swaggerhub.com/apis-docs/yasminguimaraes/Posts_CMS/1.0.0
 
+### Public project's url: 
+
+https://posts-cms.herokuapp.com/
+
 ### Getting Started
 
 - After you clone the project: 
@@ -49,7 +53,7 @@ php artisan jwt:generate
 php artisan migrate --seed
 ```
 
-### How to run tests
+### How to run project's tests
 
 ```
 php artisan test
@@ -62,7 +66,7 @@ Auth
 ```
 
 ```
-POST http://localhost:8000/api/login
+POST https://posts-cms.herokuapp.com/api/login
 ```
 
 ```
@@ -99,7 +103,7 @@ List all posts
 ```
 
 ```
-GET localhost:8000/api/posts
+GET lhttps://posts-cms.herokuapp.com/api/posts
 ```
 
 ```
@@ -159,7 +163,7 @@ Search post by tag
 ```
 
 ```
-GET localhost:8000/api/posts?tag=organization
+GET https://posts-cms.herokuapp.com/api/posts?tag=organization
 ```
 
 ```
@@ -203,7 +207,7 @@ Create Post
 ```
 
 ```
-POST localhost:8000/api/posts
+POST https://posts-cms.herokuapp.com/api/posts
 ```
 
 ```
@@ -258,7 +262,7 @@ Update Post
 ```
 
 ```
-PUT localhost:8000/api/posts/2
+PUT https://posts-cms.herokuapp.com/api/posts/2
 ```
 
 ```
@@ -313,7 +317,7 @@ Delete Post
 ```
 
 ```
-DELETE localhost:8000/api/posts/2
+DELETE https://posts-cms.herokuapp.com/api/posts/2
 ```
 
 ```
