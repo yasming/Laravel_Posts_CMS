@@ -1,61 +1,325 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Posts_CMS
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project simulate a cms posts systems, where the post have a content, title, author and tags, the user needs to authenticate to use the posts system .
 
-## About Laravel
+## Prerequisites
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```
+PHP >= 7.3
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```
+Laravel >= 8.12
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+### API Collection
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+https://www.getpostman.com/collections/94a84cdf476c573e0566
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Getting Started
 
-## Laravel Sponsors
+- After you clone the project: 
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```
+composer install
+```
 
-### Premium Partners
+```
+cp .env.example .env
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+```
+php artisan key:generate
+```
 
-## Contributing
+```
+php artisan jwt:generate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+php artisan migrate --seed
+```
 
-## Code of Conduct
+- How to consume the project routes: 
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
+Auth
+```
 
-## Security Vulnerabilities
+```
+POST http://localhost:8000/api/login
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+Body: 
+```
 
-## License
+```
+{
+    "email": "email@example.com",
+    "password": "password"
+}
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+Response: 
+```
+
+```
+{
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYwNTM0OTA2OSwiZXhwIjoxNjA1MzUyNjY5LCJuYmYiOjE2MDUzNDkwNjksImp0aSI6Im9rRmw5MjdsSEJqSDJhOEQiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.fW_wZSbZZogCZMIWnMBpttassvGUMQV-wxfbXxyPrhY",
+    "user": {
+        "id": 1,
+        "name": "Eusebio Fisher Sr.",
+        "email": "email@example.com",
+        "email_verified_at": "2020-11-11T20:34:17.000000Z",
+        "created_at": "2020-11-11T20:34:17.000000Z",
+        "updated_at": "2020-11-11T20:34:17.000000Z"
+    }
+}
+```
+
+```
+List all posts
+```
+
+```
+GET localhost:8000/api/posts
+```
+
+```
+Headers:
+```
+
+```
+Authorization: Bearer Token
+```
+
+```
+Response:
+```
+
+```
+{
+    "data": [
+         {
+            "id": 2,
+            "title": "hotel test",
+            "author": "Jett Hilpert",
+            "content": "Local app manager. Start apps within your browser, developer tool with local .localhost domain and https out of the box.",
+            "tags": [
+                "node",
+                "organizing",
+                "webapps",
+                "domain",
+                "developer",
+                "https",
+                "proxy"
+            ]
+        },
+        {
+            "id": 4,
+            "title": "Miss",
+            "author": "Prof. Bertha Hayes",
+            "content": "Sed consectetur aut quibusdam animi non molestias doloribus. Qui molestias ut rerum ut rerum. Laborum temporibus ducimus ipsam qui. Dicta occaecati facilis quibusdam molestias facere tempora.",
+            "tags": [
+                "api",
+                "json",
+                "schema",
+                "node",
+                "github",
+                "rest"
+            ]
+        },
+   ]
+}
+```
+
+```
+Response Code: 200
+```
+
+```
+Search post by tag
+```
+
+```
+GET localhost:8000/api/posts?tag=organization
+```
+
+```
+Headers:
+```
+
+```
+Authorization: Bearer Token
+```
+
+```
+Response:
+```
+
+```
+{
+    "data": [
+        {
+            "id": 5,
+            "title": "Prof.",
+            "author": "Wendell Leuschke",
+            "content": "Ipsa error earum quia maiores facere. Consequatur rem minima rerum consequatur amet impedit. Consequuntur consequatur at cupiditate accusamus consectetur tempore aut.",
+            "tags": [
+                "organization",
+                "planning",
+                "collaboration",
+                "writing",
+                "calendar"
+            ]
+        },
+     ]
+}
+```
+
+```
+Response Code: 200
+```
+
+```
+Create Post
+```
+
+```
+POST localhost:8000/api/posts
+```
+
+```
+Headers:
+```
+
+```
+Authorization: Bearer Token
+```
+
+```
+Body:
+```
+
+```
+{ 
+    "title": "hotel",
+    "author": "Jett Hilpert",
+    "content": "Local app manager. Start apps within your browser, developer tool with local .localhost domain and https out of the box.",
+    "tags":["node", "organizing", "webapps", "domain", "developer", "https", "proxy"]
+}
+```
+
+```
+Response:
+```
+
+```
+{
+    "title": "hotel",
+    "author": "Jett Hilpert",
+    "content": "Local app manager. Start apps within your browser, developer tool with local .localhost domain and https out of the box.",
+    "tags": [
+        "node",
+        "organizing",
+        "webapps",
+        "domain",
+        "developer",
+        "https",
+        "proxy"
+    ],
+    "id": 23
+}
+```
+
+```
+Response Code: 201
+```
+
+```
+Update Post
+```
+
+```
+PUT localhost:8000/api/posts/2
+```
+
+```
+Headers:
+```
+
+```
+Authorization: Bearer Token
+```
+
+```
+Body:
+```
+
+```
+{ 
+    "title": "hotel test",
+    "author": "Jett Hilpert",
+    "content": "Local app manager. Start apps within your browser, developer tool with local .localhost domain and https out of the box.",
+    "tags":["node", "organizing", "webapps", "domain", "developer", "https", "proxy"]
+}
+```
+
+```
+Response:
+```
+
+```
+{
+    "id": 2,
+    "title": "hotel test",
+    "author": "Jett Hilpert",
+    "content": "Local app manager. Start apps within your browser, developer tool with local .localhost domain and https out of the box.",
+    "tags": [
+        "node",
+        "organizing",
+        "webapps",
+        "domain",
+        "developer",
+        "https",
+        "proxy"
+    ]
+}
+```
+
+```
+Response Code: 200
+```
+
+```
+Delete Post
+```
+
+```
+DELETE localhost:8000/api/posts/2
+```
+
+```
+Headers:
+```
+
+```
+Authorization: Bearer Token
+```
+
+```
+Response:
+```
+
+```
+{
+    []
+}
+```
+
+```
+Response Code: 204
+```
