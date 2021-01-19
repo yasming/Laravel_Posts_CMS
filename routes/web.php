@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    dd(request()->server('HTTP_X_FORWARDED_FOR'));
+    dd(file_get_contents("http://ipecho.net/plain"));
     return view('welcome');
 });
