@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-     dd(request()->server('SERVER_ADDR'), request()->server('SERVER_PORT'));
+    dd(request()->server('REMOTE_ADDR'));
     return view('welcome');
 });
