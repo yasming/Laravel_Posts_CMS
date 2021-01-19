@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-     dd(request()->ip());
+     dd(request()->server('SERVER_ADDR'));
     return view('welcome');
 });
