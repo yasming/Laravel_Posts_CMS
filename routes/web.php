@@ -14,6 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    dd($_SERVER['HTTP_X_FORWARDED_FOR']);
     return view('welcome');
 });
